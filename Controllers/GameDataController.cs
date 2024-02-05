@@ -78,6 +78,16 @@ namespace unshaped_gamedata_api.Controllers
         [HttpPost]
         public async Task<ActionResult<GameData>> PostGameData(GameData gameData)
         {
+            // Additional Validation
+            if (gameData.Hours == null && gameData.Minutes == null) {
+                // We need to calculate these values
+                var minutes = gameData.TimePlayed % 60;
+                var hours = (gameData.TimePlayed - minutes) / 60;
+
+                gameData.Hours = hours;
+                gameData.Minutes = minutes;
+
+            }
             _context.GameData.Add(gameData);
             await _context.SaveChangesAsync();
 
