@@ -1,25 +1,18 @@
-## Steps to initialise project
+# Game Data API 
 
-dotnet new webapi --use-controllers -o unshaped-gamedata-api
+This is a simple REST API built with .Net to store information about Games I own in Steam
+and other platforms.
 
-dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+The data is stored in an SQLite database for ease of use.
 
-dotnet tool install --global dotnet-ef
-
-or to upgrade
-
-dotnet tool update --global dotnet-ef
-
-dotnet add package Microsoft.EntityFrameworkCore.Design
-dotnet add package Microsoft.EntityFrameworkCore.Tools
-
-I had to manually add the DBContext
-
-dotnet ef migrations add InitialCreate
-dotnet ef database update
 
 ## Manual testing
-http://localhost:5094/api/gamedata
+
+To make a GET you can use this URL
+
+https://localhost:7011/api/gamedata
+
+/Tools/Powershell contains PowerShell scripts for more detailed testing
 
 ## Authentication
 
@@ -60,3 +53,25 @@ Allow PowerShell to access secrets from AWS Secrets Manager
 Install-Module -Name AWS.Tools.SecretsManager
 Get-SECSecretValue -SecretId Development_unshaped.gamedata.api_Authentication__ApiKey
 ```
+
+## Steps to initialise project
+
+Just for my notes that are some of the steps I used to create the project
+
+dotnet new webapi --use-controllers -o unshaped-gamedata-api
+
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+
+dotnet tool install --global dotnet-ef
+
+or to upgrade
+
+dotnet tool update --global dotnet-ef
+
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+
+I had to manually add the DBContext
+
+dotnet ef migrations add InitialCreate
+dotnet ef database update
