@@ -21,6 +21,9 @@ var appName = builder.Environment.ApplicationName;
 // replace dashes with dots (AWS Secrets manager does not allow dash)
 appName = appName.Replace("-", ".");
 
+// add the secrets manager to the Configuration to allow the secrets to be
+// accessed via simple configuration calls
+
 builder.Configuration.AddSecretsManager(region: RegionEndpoint.EUWest2,
     configurator: options =>
     {
@@ -44,6 +47,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// This is my api key middleware
 app.UseMiddleware<ApiKeyAuthMiddleware>();
 
 app.UseAuthorization();
