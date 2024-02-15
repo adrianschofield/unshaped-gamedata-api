@@ -36,6 +36,8 @@ builder.Configuration.AddSecretsManager(region: RegionEndpoint.EUWest2,
     }
 );
 
+builder.Services.AddScoped<ApiKeyAuthFilter>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,7 +50,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // This is my api key middleware
-app.UseMiddleware<ApiKeyAuthMiddleware>();
+// app.UseMiddleware<ApiKeyAuthMiddleware>();
 
 app.UseAuthorization();
 

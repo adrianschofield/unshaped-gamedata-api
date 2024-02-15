@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using unshaped_gamedata_api.Authentication;
 using unshaped_gamedata_api.Data;
 using unshaped_gamedata_api.Models;
 
@@ -23,6 +24,7 @@ namespace unshaped_gamedata_api.Controllers
 
         // GET: api/GameData
         [HttpGet]
+        [ServiceFilter(typeof(ApiKeyAuthFilter))]
         public async Task<ActionResult<IEnumerable<GameData>>> GetGameData()
         {
             return await _context.GameData.ToListAsync();
@@ -30,6 +32,7 @@ namespace unshaped_gamedata_api.Controllers
 
         // GET: api/GameData/5
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(ApiKeyAuthFilter))]
         public async Task<ActionResult<GameData>> GetGameData(int id)
         {
             var gameData = await _context.GameData.FindAsync(id);
@@ -45,6 +48,7 @@ namespace unshaped_gamedata_api.Controllers
         // PUT: api/GameData/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(ApiKeyAuthFilter))]
         public async Task<IActionResult> PutGameData(int id, GameData gameData)
         {
             if (id != gameData.Id)
@@ -76,6 +80,7 @@ namespace unshaped_gamedata_api.Controllers
         // POST: api/GameData
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [ServiceFilter(typeof(ApiKeyAuthFilter))]
         public async Task<ActionResult<GameData>> PostGameData(GameData gameData)
         {
             // Additional Validation
@@ -96,6 +101,7 @@ namespace unshaped_gamedata_api.Controllers
 
         // DELETE: api/GameData/5
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(ApiKeyAuthFilter))]
         public async Task<IActionResult> DeleteGameData(int id)
         {
             var gameData = await _context.GameData.FindAsync(id);
