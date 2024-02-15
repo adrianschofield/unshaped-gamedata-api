@@ -75,3 +75,7 @@ I had to manually add the DBContext
 
 dotnet ef migrations add InitialCreate
 dotnet ef database update
+
+Scaffold the controller
+
+dotnet aspnet-codegenerator controller -name GameDataController -async -api -m GameData -dc DatabaseContext -outDir Controllers
