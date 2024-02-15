@@ -110,6 +110,29 @@ namespace unshaped_gamedata_api.Controllers
             return NoContent();
         }
 
+        // GET: api/GameData/Dashboard
+        [HttpGet("dashboard")]
+        public async Task<ActionResult<Dashboard>> GetDashboardData()
+        {
+            var data = await _context.GameData.ToListAsync();
+            var results = new Dashboard();
+
+            // TODO
+            // Use the data to calculate the data
+
+            // DBG
+            // Fake Data
+            results.GamesLessThanOne = 10;
+            results.GamesLessThanTen = 17;
+            results.GamesMoreThanTen = 25;
+            results.GamesTotal = 52;
+            results.GamesXbox = 1;
+            results.GamesPlayStation = 2;
+            results.GamesPC = 49;
+
+            return results;
+        }
+
         private bool GameDataExists(int id)
         {
             return _context.GameData.Any(e => e.Id == id);
