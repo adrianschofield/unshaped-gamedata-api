@@ -64,11 +64,8 @@ function PutGameData($entry, $apiKey) {
 
 $config = LoadConfig
 
-# We need to get the api key from AWS
-$awsSecret = Get-SECSecretValue -SecretId Development_unshaped.gamedata.api_Authentication__ApiKey
-
 # Just read data from the API
-$results = GetGameData -apiKey $awsSecret.SecretString
+$results = GetGameData -apiKey $config.apiKey
 foreach ($result in $results) {
     Write-Host $result.name
 }
