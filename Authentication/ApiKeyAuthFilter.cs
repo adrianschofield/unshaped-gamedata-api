@@ -19,7 +19,14 @@ public class ApiKeyAuthFilter : IAuthorizationFilter
         }
 
         // Get the actual api key from AWS from configuration
-        var apiKey = _configuration.GetValue<string>(AuthConstants.ApiKeySectionName);
+        var apiKey = _configuration.GetValue<string>(AuthConstants.AzureApiKeySectionName);
+
+        //DBG - this should never happen - here for troubleshooting
+        if (null == apiKey) {
+            context.Result = new UnauthorizedObjectResult("Invalid Configuration");
+            return;
+        }
+
         // Check if the api keys match, if not return 401
         if (null != apiKey && !apiKey.Equals(extractedApiKey)) {
             context.Result = new UnauthorizedObjectResult("Invalid API Key");
