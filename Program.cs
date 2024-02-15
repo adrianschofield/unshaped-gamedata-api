@@ -21,21 +21,6 @@ var appName = builder.Environment.ApplicationName;
 // replace dashes with dots (AWS Secrets manager does not allow dash)
 appName = appName.Replace("-", ".");
 
-// add the secrets manager to the Configuration to allow the secrets to be
-// accessed via simple configuration calls
-
-builder.Configuration.AddSecretsManager(region: RegionEndpoint.EUWest2,
-    configurator: options =>
-    {
-        // Filter out any unrequired secrets
-        options.SecretFilter = entry => entry.Name.StartsWith($"{env}_{appName}_");
-        // provide secrets in Configuration format e.g. Database:ConnectionString
-        options.KeyGenerator = (entry, s) =>    s
-            .Replace($"{env}_{appName}_", string.Empty)
-            .Replace("__", ":");
-    }
-);
-
 builder.Services.AddScoped<ApiKeyAuthFilter>();
 
 var app = builder.Build();
