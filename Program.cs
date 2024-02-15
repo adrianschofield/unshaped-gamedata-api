@@ -1,4 +1,3 @@
-using Amazon;
 using Microsoft.Build.Framework;
 using unshaped_gamedata_api.Authentication;
 using unshaped_gamedata_api.Data;
