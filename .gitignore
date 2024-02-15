@@ -8,6 +8,7 @@
 config.json
 Games.db*
 appsettings*
+Certs/
 
 # User-specific files
 *.rsuser
