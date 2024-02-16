@@ -61,11 +61,13 @@ function PutGameData($entry, $apiKey) {
 }
 
 # Main
-
 $config = LoadConfig
 
+# We need to retrieve the api key from Azure Key Vault rather than the configuration file
+$apiKey = Get-AzKeyVaultSecret -VaultName $config.azKeyVault -Name $config.azKeyName -AsPlainText
+
 # Just read data from the API
-$results = GetGameData -apiKey $config.apiKey
+$results = GetGameData -apiKey $apiKey
 foreach ($result in $results) {
     Write-Host $result.name
 }
