@@ -7,7 +7,7 @@ using Azure.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // ConnectionString for access to SQLite database
-var connectionString = builder.Configuration.GetConnectionString("Games") ?? "Data Source=Data/Games.db";
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
 
 // Add Azure Key Vault secrets to configuration
 
@@ -32,7 +32,7 @@ builder.Configuration.AddAzureKeyVault(
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddSqlite<DatabaseContext>(connectionString);
+builder.Services.AddSqlite<DatabaseContext>($"Data Source={connectionString}");
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
