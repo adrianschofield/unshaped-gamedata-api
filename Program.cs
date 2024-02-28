@@ -1,15 +1,38 @@
-using Amazon;
 using Microsoft.Build.Framework;
 using unshaped_gamedata_api.Authentication;
 using unshaped_gamedata_api.Data;
-
-
+using System.Security.Cryptography.X509Certificates;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("Games") ?? "Data Source=Data/Games.db";
+
+// ConnectionString for access to SQLite database
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
+
+// Add Azure Key Vault secrets to configuration
+
+using var x509Store = new X509Store(StoreLocation.CurrentUser);
+
+x509Store.Open(OpenFlags.ReadOnly);
+
+var x509Certificate = x509Store.Certificates
+    .Find(
+        X509FindType.FindByThumbprint,
+        builder.Configuration["Authentication:AzureADCertThumbprint"],
+        validOnly: false)
+    .OfType<X509Certificate2>()
+    .Single();
+
+builder.Configuration.AddAzureKeyVault(
+    new Uri($"https://{builder.Configuration["Authentication:KeyVaultName"]}.vault.azure.net/"),
+    new ClientCertificateCredential(
+        builder.Configuration["Authentication:AzureADDirectoryId"],
+        builder.Configuration["Authentication:AzureADApplicationId"],
+        x509Certificate));
+
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddSqlite<DatabaseContext>(connectionString);
+builder.Services.AddSqlite<DatabaseContext>($"Data Source={connectionString}");
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
