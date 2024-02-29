@@ -121,22 +121,46 @@ namespace unshaped_gamedata_api.Controllers
         public async Task<ActionResult<Dashboard>> GetDashboardData()
         {
             var data = await _context.GameData.ToListAsync();
-            var results = new Dashboard();
+            var response = new Dashboard();
 
-            // TODO
             // Use the data to calculate the data
 
-            // DBG
-            // Fake Data
-            results.GamesLessThanOne = 10;
-            results.GamesLessThanTen = 17;
-            results.GamesMoreThanTen = 25;
-            results.GamesTotal = 52;
-            results.GamesXbox = 1;
-            results.GamesPlayStation = 2;
-            results.GamesPC = 49;
+            // I seem to need to initialise all the ints
 
-            return results;
+            // Total
+            response.GamesTotal = data.Count;
+
+            foreach (var result in data ) {
+                
+                // Platforms
+                switch (result.Platform)
+                {
+                    case "PC":
+                        response.GamesPC++;
+                        break;
+                    case "Xbox":
+                        response.GamesXbox++;
+                        break;
+                    case "PlayStation":
+                        response.GamesPlayStation++;
+                        break;
+                    default:
+                        Console.WriteLine("a game didn't have a platform - weird");
+                        break;
+                }
+
+                // Time played
+
+                if (result.TimePlayed < 60) {
+                    response.GamesLessThanOne++;
+                } else if (result.TimePlayed < 600) {
+                    response.GamesLessThanTen++;
+                } else {
+                    response.GamesMoreThanTen++;
+                }
+            }
+
+            return response;
         }
 
         private bool GameDataExists(int id)
