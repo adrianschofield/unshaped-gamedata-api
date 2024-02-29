@@ -58,7 +58,8 @@ builder.Services.AddScoped<ApiKeyAuthFilter>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Hack to see if things are working without the database
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
