@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // ConnectionString for access to SQLite database
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
 
-// OK I need to handle Azure Kay Vault in a better fashion as the app will crash
+// OK I need to handle Azure Key Vault in a better fashion as the app will crash
 // in Azure because it has no Certificates.
 
 // Add Azure Key Vault secrets to configuration
