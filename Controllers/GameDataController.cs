@@ -158,6 +158,14 @@ namespace unshaped_gamedata_api.Controllers
                 } else {
                     response.GamesMoreThanTen++;
                 }
+
+                // Current
+
+                if (result.Current == true) {
+                    if (null != result.Name){
+                        response.CurrentGames.Add(result.Name);
+                    }
+                }
             }
 
             return response;

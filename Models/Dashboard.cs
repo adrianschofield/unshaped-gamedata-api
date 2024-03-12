@@ -12,6 +12,7 @@ namespace unshaped_gamedata_api.Models
         public int? GamesLessThanOne { get; set; }
         public int? GamesLessThanTen { get; set; }
         public int? GamesMoreThanTen { get; set; }
+        public List<string> CurrentGames { get; set; }
 
         // Constructor
 
@@ -24,6 +25,7 @@ namespace unshaped_gamedata_api.Models
             GamesLessThanOne = 0;
             GamesLessThanTen = 0;
             GamesMoreThanTen = 0;
+            CurrentGames = new List<string>();
         }
     }
 }
