@@ -7,7 +7,9 @@
 # My exclusions
 config.json
 Games.db*
-appsettings*
+appsettings.Development*
+Certs/
+.vscode
 
 # User-specific files
 *.rsuser
