@@ -79,3 +79,23 @@ dotnet ef database update
 Scaffold the controller
 
 dotnet aspnet-codegenerator controller -name GameDataController -async -api -m GameData -dc DatabaseContext -outDir Controllers
+
+## Azure Deployment
+
+Two branches are set up for Azure work
+
+azure-dev - all development work related to Azure
+azure-prod - release branch, only takes PRs from azure-dev no direct check ins.
+
+There is also a branch set up in Azure
+
+git remote add azure https://None@app-gamedata-westeurope-dev-001.scm.azurewebsites.net/app-gamedata-westeurope-dev-001.git
+
+To access this you need the credentials for unshaped-deploy uset
+
+Steps to deploy
+- Check changes into azure-dev
+- Create a PR from azure-dev to azure-prod and merge
+- switch to azure-prod locally
+- git pull
+- git push azure azure-prod
