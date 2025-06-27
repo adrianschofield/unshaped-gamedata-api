@@ -79,3 +79,4 @@ dotnet ef database update
 Scaffold the controller
 
 dotnet aspnet-codegenerator controller -name GameDataController -async -api -m GameData -dc DatabaseContext -outDir Controllers
+
