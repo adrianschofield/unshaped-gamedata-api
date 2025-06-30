@@ -8,7 +8,7 @@ namespace unshaped_gamedata_api.Data
         public DatabaseContext(DbContextOptions options) : base(options) { }
         public DbSet<GameData> GameData { get; set; }
 
-        public string DbPath { get; }
+        public required string DbPath { get; set; }
 
         /*public DatabaseContext() {
             var folder = Environment.SpecialFolder.LocalApplicationData;
